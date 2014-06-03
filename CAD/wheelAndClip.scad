@@ -4,9 +4,9 @@ wheelHeight = 30;
 wheelWidth = 5;
 
 
-//wheel(wheelWidth, wheelHeight);
+wheel(wheelWidth, wheelHeight);
 
-clip(wheelWidth*1.1, 3);
+//clip(wheelWidth, 5);
 
 //translate([0,0,0]){
 	//rotate([0,90,0]){
@@ -17,7 +17,7 @@ clip(wheelWidth*1.1, 3);
 
 module wheel(height,width){
 	
-	holeRadius = 3;
+	holeRadius = 5;
 
 	//translate([1/2,0]){
 
@@ -27,7 +27,7 @@ module wheel(height,width){
 
 				color("Yellow",0.1) circle(r=width, $fn=2000, center=true);
 
-				circle(r=holeRadius*1.1, $fn=2000, center=true);
+				circle(r=holeRadius*1.05, $fn=2000, center=true);
 			}
 		//}
 	//}
@@ -37,7 +37,7 @@ module wheel(height,width){
 module clip(clipLength,clipRadius){
 
 	//translate([0,0,-1.5]){
-		cube([10,10,3], center=true);
+		cube([12,12,3], center=true);
 	//}
 
 	translate([0,0,1.5]){
@@ -57,9 +57,9 @@ module clip(clipLength,clipRadius){
 			cylinder(clipLength,clipRadius*0.7, clipRadius*0.7,$fn=1000);
 		}
 
-		translate([-(clipRadius + 1),-1/2,0.2*clipLength]){
+		translate([-(clipRadius + 1),-1/2,0.0*clipLength]){
 
-			cube([clipRadius*5,1,clipLength]);
+			cube([clipRadius*5,1,clipLength*1.2]);
 		}
 	}
 
