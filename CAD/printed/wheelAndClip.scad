@@ -4,9 +4,9 @@ wheelHeight = 30;
 wheelWidth = 5;
 
 
-wheel(wheelWidth, wheelHeight);
+//wheel(wheelWidth, wheelHeight);
 
-//clip(wheelWidth, 5);
+clip(wheelWidth, 5);
 
 //translate([0,0,0]){
 	//rotate([0,90,0]){
