@@ -41,7 +41,7 @@ for (i = [0, 1]){
 
 		// front wheel clips
 		translate([(carWidth/2)-buffer, -buffer+(carLength/2),-carThickness]){
-			frontWheelClip(9);
+			frontWheelClip(6);
 		}
 
 		translate([(carWidth/2)-buffer,buffer-carLength/2,-carThickness]){
@@ -50,7 +50,7 @@ for (i = [0, 1]){
 
 
 		translate([(WidthOfSorterStrut/2)-buffer/2, -buffer+(carLength/2)-distanceDueToAngle,-carThickness-4.5]){
-			doubleClip(6,2);
+			doubleClip(3,2);
 		}
 		
 
@@ -410,7 +410,7 @@ module wheel(height,width,height){
 
 			difference(){
 
-				color("Yellow",0.1) cylinder(h=height, r=width, $fn=20, center=true);
+				color("Yellow",0.1) cylinder(h=height, r=width, $fn=1000, center=true);
 
 				cylinder(h=height*1.1, r=holeRadius, $fn=20, center=true);
 			}
@@ -429,7 +429,7 @@ module wheelBack(height,width,height){
 
 			difference(){
 
-				color("Yellow",0.1) cylinder(h=height, r=width, $fn=20, center=true);
+				color("Yellow",0.1) cylinder(h=height, r=width, $fn=1000, center=true);
 
 				cylinder(h=height*1.1, r=holeRadius, $fn=20, center=true);
 			}
@@ -465,7 +465,41 @@ module doubleClip(clipLength,clipRadius){
 }
 
 
+module clip(clipLength,clipRadius){
 
+	//translate([0,0,-1.5]){
+	//	cube([12,12,3], center=true);
+	//}
+
+	translate([0,0,1.5]){
+
+	difference(){
+	
+		union() {
+
+			cylinder(clipLength,clipRadius, clipRadius,$fn=1000);
+
+			translate([0,0,clipLength-clipLength*0.1]){
+				cylinder(clipLength*0.2,clipRadius*1.2, clipRadius,$fn=1000);
+			}
+		}
+
+		translate([0,0,0.1*clipLength]){
+			cylinder(clipLength,clipRadius*0.7, clipRadius*0.7,$fn=1000);
+		}
+
+		translate([-(clipRadius + 1),-1/2,0.0*clipLength]){
+
+			cube([clipRadius*5,1,clipLength*1.2]);
+		}
+	}
+
+	}
+
+}
+
+
+/*
 module clip(clipLength,clipRadius){
 
 	
@@ -491,4 +525,4 @@ module clip(clipLength,clipRadius){
 		}
 	}
 }
-
+*/
