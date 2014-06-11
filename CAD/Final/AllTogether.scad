@@ -1,20 +1,22 @@
-carWidth = 100;
-carLength = 150;
+carWidth = 120;
+carLength = 200;
 carThickness = 8;
 
-wheelHeight = 30;
+wheelHeight = 50;
 wheelWidth = 5;
 
 wheelConnect = 12;
 wheelConnect2 = 20;
 
-buffer = 15;
+buffer = 20;
+buffer2 = 15;
+buffer3 = 15;
 angle = 60;
 
 
 
 distanceDueToAngle = sin(angle)*wheelConnect2; // needs calculating
-WidthOfSorterStrut = -buffer+carWidth-(2*cos(angle)*wheelConnect2); // needs calculating
+WidthOfSorterStrut = -buffer2+carWidth-(2*cos(angle)*wheelConnect2); // needs calculating
 
 
 translate([0,0,-carThickness/2]){
@@ -31,26 +33,26 @@ for (i = [0, 1]){
 		}	
 
 		// rear wheels
-		translate([(wheelConnect) + (carWidth/2) , buffer-(carLength/2), -carThickness-3]){
+		translate([(wheelConnect) + (carWidth/2) , buffer3-(carLength/2), -carThickness-3]){
 			//wheel(wheelWidth, wheelHeight);
 			wheelBack(wheelWidth, wheelHeight);
 		}
 	
-		translate([(carWidth/2)-buffer, -buffer+(carLength/2), -carThickness-3]){
-			frontWheelConnections(wheelConnect, wheelConnect2, buffer, wheelWidth, angle);
+		translate([(carWidth/2)-buffer2, -buffer+(carLength/2), -carThickness-3]){
+			frontWheelConnections(wheelConnect, wheelConnect2, buffer2, wheelWidth, angle);
 		}
 
 		// front wheel clips
-		translate([(carWidth/2)-buffer, -buffer+(carLength/2),-carThickness]){
+		translate([(carWidth/2)-buffer2, -buffer+(carLength/2),-carThickness]){
 			frontWheelClip(6);
 		}
 
-		translate([(carWidth/2)-buffer,buffer-carLength/2,-carThickness]){
+		translate([(carWidth/2)-buffer2,buffer3-carLength/2,-carThickness]){
 			backWheelSupport();
 		}
 
 
-		translate([(WidthOfSorterStrut/2)-buffer/2, -buffer+(carLength/2)-distanceDueToAngle,-carThickness-4.5]){
+		translate([(WidthOfSorterStrut/2)-buffer2/2, -buffer+(carLength/2)-distanceDueToAngle,-carThickness-4.5]){
 			doubleClip(3,2);
 		}
 		
@@ -58,19 +60,19 @@ for (i = [0, 1]){
 	}	
 
 	// rear axel
-	translate([0,buffer-carLength/2,-carThickness-3]){
-		//rearAxel(2, (carWidth) + (wheelConnect*2) + wheelWidth);
+	translate([0,buffer3-carLength/2,-carThickness-3]){
+		rearAxel(2, (carWidth) + (wheelConnect*2) + wheelWidth);
 	}
 
 
 	//
 	translate([0,-buffer+carLength/2,-carThickness-6]){
-		frontWheelStrut1(-buffer+carWidth, buffer, 2);
+		frontWheelStrut1(-buffer2+carWidth, buffer2, 2);
 	}
 
 
-	translate([0,-buffer+(carLength/2)-distanceDueToAngle,-carThickness-6]){
-		frontWheelStrut1(WidthOfSorterStrut, buffer, 2);
+	translate([0,-buffer+(carLength/2)-distanceDueToAngle,-carThickness-6])		{
+		frontWheelStrut1(WidthOfSorterStrut, buffer2, 2);
 	}	
 
 
@@ -79,8 +81,10 @@ for (i = [0, 1]){
 	}
 
 
-	translate([0,(-buffer + carLength)/2, -carThickness]){
-		servoBracket();
+	translate([0, (carLength)/2, -carThickness]){
+			rotate([180,0,180]){
+				servoClip();
+			}
 	}
 
 }
@@ -502,6 +506,78 @@ module clip(clipLength,clipRadius){
 
 	}
 
+}
+
+
+module servoClip(){
+	
+	servoHeight = 31;
+	servoWidth = 22;
+	servoDepth = 12;
+
+	clipHeightPos = 11;
+
+
+	clipHeight = 2;
+	clipWidth = 5;
+	clipDepth = 2;
+
+	wireHeight = 31 - 4;
+
+	thickness = 6;
+	thicknessLess = 4;
+	thicknessTop = 4;
+
+	screwShaft = 2;
+	screwHead = 5;
+
+	translate([0,thicknessLess-(servoWidth/2),(servoHeight+(thicknessTop/2))/2]){
+
+		difference(){
+
+			cube([servoWidth+(2*thickness), servoDepth+thicknessLess, servoHeight+thicknessTop], center=true);
+	
+
+			translate([0,-thicknessLess/2,-thicknessTop/2]){
+				cube([servoWidth, servoDepth, servoHeight], center=true);
+			}
+	
+			for (i = [0, 1]){
+				mirror([ i, 0, 0 ]){		
+					translate([-(servoWidth+clipWidth)/2,-(thicknessLess)/2, -((servoHeight+thicknessTop)/2) + clipHeightPos - clipHeight/2]){
+						cube([clipWidth, servoDepth, clipHeight], center=true);
+					}
+				}
+			}
+
+			translate([-(servoWidth+clipWidth)/2,-(thicknessLess)/2, -((servoHeight+thicknessTop)/2) + wireHeight - clipHeight/2]){
+					cube([clipWidth*2, servoDepth, clipHeight], center=true);
+			}
+		}
+
+		for (i = [0, 1]){
+
+			mirror([ i, 0, 0 ]){
+
+				translate([5 +thickness + servoWidth/2,0,2.5-(servoHeight+thicknessTop)/2]){
+	
+					difference(){
+					
+						cube([10,servoDepth+thicknessLess,5], center=true);
+
+						translate([0,0,+5/2]){
+							cylinder(h=5, r=screwHead/2, $fn=20, center=true);
+						}
+
+						translate([0,0,-5/2]){
+							cylinder(h=5, r=screwShaft/2, $fn=20, center=true);
+						}
+					}
+		
+				}
+			}
+		}
+	}
 }
 
 
