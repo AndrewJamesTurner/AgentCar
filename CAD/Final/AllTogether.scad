@@ -1,6 +1,6 @@
 carWidth = 100;
 carLength = 150;
-carThickness = 2.5;
+carThickness = 8;
 
 wheelHeight = 30;
 wheelWidth = 5;
@@ -9,15 +9,16 @@ wheelConnect = 12;
 wheelConnect2 = 20;
 
 buffer = 15;
-
 angle = 60;
+
+
 
 distanceDueToAngle = sin(angle)*wheelConnect2; // needs calculating
 WidthOfSorterStrut = -buffer+carWidth-(2*cos(angle)*wheelConnect2); // needs calculating
 
 
-translate([0,0,0.4]){
-	color("Orange",0.2) cube([carWidth, carLength, carThickness], center=true);
+translate([0,0,-carThickness/2]){
+	color("Orange",0.2) cube([carWidth, carLength, carThickness/2], center=true);
 }
 
 for (i = [0, 1]){
@@ -58,7 +59,7 @@ for (i = [0, 1]){
 
 	// rear axel
 	translate([0,buffer-carLength/2,-carThickness-3]){
-		rearAxel(2, (carWidth) + (wheelConnect*2) + wheelWidth);
+		//rearAxel(2, (carWidth) + (wheelConnect*2) + wheelWidth);
 	}
 
 
@@ -86,29 +87,19 @@ for (i = [0, 1]){
 
 
 
-module servoBracket(){
-
-	
-		cube([40,15,3], center=true);
-	
-
-}
-
-
-
 module backWheelSupport(){
 
 	difference(){
 		
-		translate([0,0,-3]){
+		translate([0,0,-4]){
 			
 			cube([5,5,5], center=true);
 		}
 
-		translate([0,0,-3]){
+		translate([0,0,-4]){
 		
 			rotate([0,90,0]){
-				cylinder(h=10, r=1.1, $fn=20, center=true);
+				cylinder(h=10, r=2.1, $fn=1000, center=true);
 			}
 		}
 
@@ -126,39 +117,54 @@ module backWheelSupport(){
 		rotate([180,0,0]){
 		
 			translate([-7,0,0]){
-				cylinder(h=5*1.1, r=2, $fn=20);
+				cylinder(h=5*1.1, r=2, $fn=1000);
 			}
 
 			translate([7,0,0]){
-				cylinder(h=5*1.1, r=2, $fn=20);
+				cylinder(h=5*1.1, r=2, $fn=1000);
 			}
 
 			translate([0,-7,0]){
-				cylinder(h=5*1.1, r=2, $fn=20);
+				cylinder(h=5*1.1, r=2, $fn=1000);
 			}
 
 			translate([0,7,0]){
-				cylinder(h=5*1.1, r=2, $fn=20);
+				cylinder(h=5*1.1, r=2, $fn=1000);
 			}
 
 			translate([-7,0,-1.5]){
-				cylinder(h=5*1.1, r=1, $fn=20);
+				cylinder(h=5*1.1, r=1, $fn=1000);
 			}
 
 			translate([7,0,-1.5]){
-				cylinder(h=5*1.1, r=1, $fn=20);
+				cylinder(h=5*1.1, r=1, $fn=1000);
 			}
 
 			translate([0,-7,-1.5]){
-				cylinder(h=5*1.1, r=1, $fn=20);
+				cylinder(h=5*1.1, r=1, $fn=1000);
 			}
 
 			translate([0,7,-1.5]){
-				cylinder(h=5*1.1, r=1, $fn=20);
+				cylinder(h=5*1.1, r=1, $fn=1000);
 			}
 		}
 	}
 }
+
+
+
+
+module servoBracket(){
+
+	
+		cube([40,15,3], center=true);
+	
+
+}
+
+
+
+
 
 
 
