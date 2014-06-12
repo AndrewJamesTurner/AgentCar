@@ -1,4 +1,6 @@
 
+ 
+
 height = 7;
 radius = 2;
 
@@ -6,7 +8,7 @@ difference(){
 	
 	union() {
 
-		cylinder(height,radius, radius,$fn=100);
+		cylinder(height,radius, radius,fn=100);
 
 		translate([0,0,height-height*0.1]){
 			cylinder(height*0.1,radius*1.2, radius*1.05,$fn=100);
