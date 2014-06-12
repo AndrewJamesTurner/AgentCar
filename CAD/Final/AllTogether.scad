@@ -11,21 +11,27 @@ wheelConnect2 = 20;
 buffer = 20;
 buffer2 = 15;
 buffer3 = 15;
-angle = 60;
+angle = 70;
 
+radius = 10;
+clipHole = 5;
 
+distanceDueToAngle = sin(angle)*wheelConnect2; 
+WidthOfSorterStrut = -buffer2+carWidth-(2*cos(angle)*wheelConnect2); 
 
-distanceDueToAngle = sin(angle)*wheelConnect2; // needs calculating
-WidthOfSorterStrut = -buffer2+carWidth-(2*cos(angle)*wheelConnect2); // needs calculating
-
-
+// main baody of car
 translate([0,0,-carThickness/2]){
-	color("Orange",0.2) cube([carWidth, carLength, carThickness/2], center=true);
+  minkowski()
+  {
+    
+    color("Orange",0.2) cube([carWidth-radius, carLength-radius, carThickness/2], center=true);
+    cylinder(r=radius/2,h=carThickness/2);
+  }
 }
 
 for (i = [0, 1]){
 
-	mirror([ i, 0, 0 ]){
+	mirror([ i, 0, 0 ]){ 
 
 		// front wheels
 		translate([(wheelConnect) + (carWidth/2), -buffer+(carLength/2), -carThickness-3]){
@@ -39,12 +45,12 @@ for (i = [0, 1]){
 		}
 	
 		translate([(carWidth/2)-buffer2, -buffer+(carLength/2), -carThickness-3]){
-			frontWheelConnections(wheelConnect, wheelConnect2, buffer2, wheelWidth, angle);
+			//frontWheelConnections(wheelConnect, wheelConnect2, buffer2, wheelWidth, angle);
 		}
 
 		// front wheel clips
 		translate([(carWidth/2)-buffer2, -buffer+(carLength/2),-carThickness]){
-			frontWheelClip(6);
+			frontWheelClip(7);
 		}
 
 		translate([(carWidth/2)-buffer2,buffer3-carLength/2,-carThickness]){
@@ -53,7 +59,7 @@ for (i = [0, 1]){
 
 
 		translate([(WidthOfSorterStrut/2)-buffer2/2, -buffer+(carLength/2)-distanceDueToAngle,-carThickness-4.5]){
-			doubleClip(3,2);
+			doubleClip(7,4);
 		}
 		
 
@@ -67,12 +73,12 @@ for (i = [0, 1]){
 
 	//
 	translate([0,-buffer+carLength/2,-carThickness-6]){
-		frontWheelStrut1(-buffer2+carWidth, buffer2, 2);
+		//frontWheelStrut1(-buffer2+carWidth, buffer2, 4);
 	}
 
 
 	translate([0,-buffer+(carLength/2)-distanceDueToAngle,-carThickness-6])		{
-		frontWheelStrut1(WidthOfSorterStrut, buffer2, 2);
+		//frontWheelStrut1(WidthOfSorterStrut, buffer2, 4);
 	}	
 
 
@@ -156,26 +162,10 @@ module backWheelSupport(){
 }
 
 
-
-
-module servoBracket(){
-
-	
-		cube([40,15,3], center=true);
-	
-
-}
-
-
-
-
-
-
-
 module frontWheelClip(height){
 
 	clipLength = height;
-	clipRadius = 2;
+	clipRadius = 4;
 	
 	difference(){
 
@@ -292,7 +282,7 @@ module frontWheelConnections(length1, length2, buffer, wheelWidth, angle){
 
 
 			translate([-width/2,-width/2, -thickness/2]){
-				color("Blue",0.5) cube([length1 + buffer + (width/2) - (wheelWidth/2), width, thickness]);
+				color("Blue",0.5) cube([length1 + buffer , width, thickness]);
 			} 
 
 			translate([0 ,0,0]){
@@ -308,21 +298,25 @@ module frontWheelConnections(length1, length2, buffer, wheelWidth, angle){
 		}
 
 		translate([0,0,-thickness/2]){
-			cylinder(h=thickness*1.1, r=2, $fn=20, center=ture);
+			cylinder(h=thickness*1.1, r=4, $fn=20, center=ture);
 
 			rotate([0,0,angle+180]){
 
 				translate([length2,0,0]){
-					cylinder(h=thickness*1.1, r=2, $fn=20, center=ture);
+					cylinder(h=thickness*1.1, r=4, $fn=20, center=ture);
 				}
 			}
 		}
 	}
 
-	// NEEDS CLIPS HERE OR ON WHEELS
-	translate([length1+buffer-(wheelWidth/2), 0, 0]){
+	// NEEDS CLIPS HERE 
+	translate([length1 + (width/2) + wheelWidth*1.1 , 0, 0]){
 
-		rotate([0,90,0]){
+    translate([-1,0,0]){
+      cube([5,15,15], center=true);
+    }
+		
+    rotate([0,90,0]){
 
 			clip(wheelWidth*1.1, 5);
 		}
@@ -333,7 +327,7 @@ module frontWheelConnections(length1, length2, buffer, wheelWidth, angle){
 
 
 
-
+/*
 module frontSteeringStrut(length, width, height){
 
 	difference(){
@@ -353,7 +347,7 @@ module frontSteeringStrut(length, width, height){
 	}
 
 }
-
+*/
 /*
 module frontWheelConnections(length1, length2, angle){
 	
@@ -467,20 +461,20 @@ module wheelBack(height,width,height){
 
 module doubleClip(clipLength,clipRadius){
 
-	clip(clipLength/2,clipRadius);
+  translate([0,0,-clipLength/2]){
 
+	clip(clipLength/2,clipRadius);
+}
 	rotate([0,180,0]){
 		clip(clipLength/2,clipRadius);
 	}
+
 }
 
 
 module clip(clipLength,clipRadius){
 
-	//translate([0,0,-1.5]){
-	//	cube([12,12,3], center=true);
-	//}
-
+	
 	translate([0,0,1.5]){
 
 	difference(){
@@ -490,17 +484,16 @@ module clip(clipLength,clipRadius){
 			cylinder(clipLength,clipRadius, clipRadius,$fn=1000);
 
 			translate([0,0,clipLength-clipLength*0.1]){
-				cylinder(clipLength*0.2,clipRadius*1.2, clipRadius,$fn=1000);
+				cylinder(1,clipRadius *1.1, clipRadius,$fn=1000);
 			}
 		}
 
 		translate([0,0,0.1*clipLength]){
-			cylinder(clipLength,clipRadius*0.7, clipRadius*0.7,$fn=1000);
+			cylinder(clipLength*2,clipRadius*0.7, clipRadius*0.7,$fn=1000);
 		}
 
 		translate([-(clipRadius + 1),-1/2,0.0*clipLength]){
-
-			cube([clipRadius*5,1,clipLength*1.2]);
+			cube([clipRadius*5,2,clipLength*5]);
 		}
 	}
 
