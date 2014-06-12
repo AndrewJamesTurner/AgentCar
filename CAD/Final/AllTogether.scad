@@ -1,16 +1,16 @@
-carWidth = 120;
-carLength = 200;
+carWidth = 130;
+carLength = 220;
 carThickness = 8;
 
 wheelHeight = 50;
 wheelWidth = 5;
 
-wheelConnect = 12;
+wheelConnect = 20;
 wheelConnect2 = 20;
 
-buffer = 20;
+buffer = 50;
 buffer2 = 15;
-buffer3 = 15;
+buffer3 = 50;
 angle = 70;
 
 radius = 10;
@@ -40,12 +40,12 @@ for (i = [0, 1]){
 
 		// rear wheels
 		translate([(wheelConnect) + (carWidth/2) , buffer3-(carLength/2), -carThickness-3]){
-			//wheel(wheelWidth, wheelHeight);
 			wheelBack(wheelWidth, wheelHeight);
 		}
 	
+    // front wheel connection
 		translate([(carWidth/2)-buffer2, -buffer+(carLength/2), -carThickness-3]){
-			//frontWheelConnections(wheelConnect, wheelConnect2, buffer2, wheelWidth, angle);
+			frontWheelConnections(wheelConnect, wheelConnect2, buffer2, wheelWidth, angle);
 		}
 
 		// front wheel clips
@@ -57,11 +57,17 @@ for (i = [0, 1]){
 			backWheelSupport();
 		}
 
-
-		translate([(WidthOfSorterStrut/2)-buffer2/2, -buffer+(carLength/2)-distanceDueToAngle,-carThickness-4.5]){
+    //
+		translate([(WidthOfSorterStrut/2)-buffer2/2, -buffer+(carLength/2)-distanceDueToAngle,-carThickness-3]){
 			doubleClip(7,4);
 		}
 		
+    
+    translate([carWidth*0.35, +(carLength)*0.35, 1.5*carThickness]){
+      rotate([0,0,-45]){
+        ultrasound();
+      }
+    }
 
 	}	
 
@@ -73,18 +79,13 @@ for (i = [0, 1]){
 
 	//
 	translate([0,-buffer+carLength/2,-carThickness-6]){
-		//frontWheelStrut1(-buffer2+carWidth, buffer2, 4);
+		frontWheelStrut1(-buffer2+carWidth, buffer2, 4);
 	}
 
 
 	translate([0,-buffer+(carLength/2)-distanceDueToAngle,-carThickness-6])		{
-		//frontWheelStrut1(WidthOfSorterStrut, buffer2, 4);
+		frontWheelStrut1(WidthOfSorterStrut, buffer2, 4);
 	}	
-
-
-	translate([0,0,0]){
-		// frontWheelClip();
-	}
 
 
 	translate([0, (carLength)/2, -carThickness]){
@@ -92,9 +93,102 @@ for (i = [0, 1]){
 				servoClip();
 			}
 	}
+  
+  translate([0, -(carLength)/4, carThickness]){
+    arduino();
+  }
+  
+  translate([0, +(carLength)*0.45, 1.5*carThickness]){
+    ultrasound();
+  }
+
+  translate([carWidth/2, 0, -carThickness]){
+			rotate([0,0,0]){
+				dcMotorClip();
+			}
+	}
+
 
 }
 
+
+// dc motor holder
+module dcMotorClip(){
+  
+ 
+  width = 20;
+  depth = 20;
+  height = 15;
+  
+  wallThickness = 3;
+  
+  translate([-depth/2, 0, -height/2]){
+  
+    difference(){
+  
+      cube([depth, width+(2*wallThickness), height+wallThickness], center=true);
+      
+      translate([0,0,wallThickness/2]){  
+      
+        cube([depth, width,  height], center=true);
+     
+      }
+      
+    }
+  }
+  
+  
+  for (i = [-5,+5-depth]){
+    for (j = [width-5+wallThickness,-width+5-wallThickness]){
+  
+  
+      translate([i, j, 0]){
+  
+        difference(){
+  
+   
+          cube([10,10,3], center=true);
+      
+      
+			
+          translate([0,0,-1.5]){
+            cylinder(h=1.5, r=3, $fn=20);
+          }
+
+
+          translate([0,0,0]){
+             cylinder(h=3, r=1, $fn=20);
+          }
+ 
+      }
+    
+    }
+  
+  
+  }
+}
+}
+
+// arduino board
+module arduino(){
+  color("Blue",1) cube([68.6,53.3,10], center=true);
+}
+
+// ultrasound module
+module ultrasound(){
+  color("Blue",1) cube([45,2,20], center=true);
+  
+  translate([(45/2)-10,13/2,0]){
+    rotate([90,0,0])
+      color("Blue",1) cylinder(h=13, r=7.5, $fn=1000, center=true);
+  }
+  
+  translate([-(45/2)+10,13/2,0]){
+    rotate([90,0,0])
+      color("Blue",1) cylinder(h=13, r=7.5, $fn=1000, center=true);
+  }
+  
+}
 
 
 module backWheelSupport(){
@@ -120,42 +214,43 @@ module backWheelSupport(){
 
 		union(){
 
-			cube([5,20,3], center=true);
-			cube([20,5,3], center=true);
+			cube([10,30,3], center=true);
+			cube([30,10,3], center=true);
 		}
 
 		rotate([180,0,0]){
 		
-			translate([-7,0,0]){
-				cylinder(h=5*1.1, r=2, $fn=1000);
+			translate([-10,0,0]){
+				cylinder(h=5*1.1, r=3, $fn=20);
 			}
 
-			translate([7,0,0]){
-				cylinder(h=5*1.1, r=2, $fn=1000);
+			translate([10,0,0]){
+				cylinder(h=5*1.1, r=3, $fn=20);
 			}
 
-			translate([0,-7,0]){
-				cylinder(h=5*1.1, r=2, $fn=1000);
+			translate([0,-10,0]){
+				cylinder(h=5*1.1, r=3, $fn=20);
 			}
 
-			translate([0,7,0]){
-				cylinder(h=5*1.1, r=2, $fn=1000);
+			translate([0,10,0]){
+				cylinder(h=5*1.1, r=3, $fn=20);
 			}
 
-			translate([-7,0,-1.5]){
-				cylinder(h=5*1.1, r=1, $fn=1000);
+
+			translate([-10,0,-1.5]){
+				cylinder(h=5*1.1, r=1, $fn=20);
 			}
 
-			translate([7,0,-1.5]){
-				cylinder(h=5*1.1, r=1, $fn=1000);
+			translate([10,0,-1.5]){
+				cylinder(h=5*1.1, r=1, $fn=20);
 			}
 
-			translate([0,-7,-1.5]){
-				cylinder(h=5*1.1, r=1, $fn=1000);
+			translate([0,-10,-1.5]){
+				cylinder(h=5*1.1, r=1, $fn=20);
 			}
 
-			translate([0,7,-1.5]){
-				cylinder(h=5*1.1, r=1, $fn=1000);
+			translate([0,10,-1.5]){
+				cylinder(h=5*1.1, r=1, $fn=20);
 			}
 		}
 	}
@@ -171,42 +266,42 @@ module frontWheelClip(height){
 
 		union(){
 
-			cube([5,20,3], center=true);
-			cube([20,5,3], center=true);
+			cube([10,30,3], center=true);
+			cube([30,10,3], center=true);
 		}
 
 		rotate([180,0,0]){
 		
-			translate([-7,0,0]){
-				cylinder(h=5*1.1, r=2, $fn=20);
+			translate([-10,0,0]){
+				cylinder(h=5*1.1, r=3, $fn=20);
 			}
 
-			translate([7,0,0]){
-				cylinder(h=5*1.1, r=2, $fn=20);
+			translate([10,0,0]){
+				cylinder(h=5*1.1, r=3, $fn=20);
 			}
 
-			translate([0,-7,0]){
-				cylinder(h=5*1.1, r=2, $fn=20);
+			translate([0,-10,0]){
+				cylinder(h=5*1.1, r=3, $fn=20);
 			}
 
-			translate([0,7,0]){
-				cylinder(h=5*1.1, r=2, $fn=20);
+			translate([0,10,0]){
+				cylinder(h=5*1.1, r=3, $fn=20);
 			}
 
 
-			translate([-7,0,-1.5]){
+			translate([-10,0,-1.5]){
 				cylinder(h=5*1.1, r=1, $fn=20);
 			}
 
-			translate([7,0,-1.5]){
+			translate([10,0,-1.5]){
 				cylinder(h=5*1.1, r=1, $fn=20);
 			}
 
-			translate([0,-7,-1.5]){
+			translate([0,-10,-1.5]){
 				cylinder(h=5*1.1, r=1, $fn=20);
 			}
 
-			translate([0,7,-1.5]){
+			translate([0,10,-1.5]){
 				cylinder(h=5*1.1, r=1, $fn=20);
 			}
 		}
@@ -309,17 +404,23 @@ module frontWheelConnections(length1, length2, buffer, wheelWidth, angle){
 		}
 	}
 
-	// NEEDS CLIPS HERE 
-	translate([length1 + (width/2) + wheelWidth*1.1 , 0, 0]){
+	
+	
 
-    translate([-1,0,0]){
-      cube([5,15,15], center=true);
+    translate([length1+ buffer   - 2.5,0,0]){
+      //color("Red",0.5) cube([5,20,20], center=true);
     }
 		
+    translate([length1 - (wheelWidth*1.1) + buffer-2.4, 0, 0]){
+      rotate([0,90,0]){
+        color("Red",0.5) cylinder(h=5, r=10, center=true);
+      }
+    }
+    
     rotate([0,90,0]){
-
-			clip(wheelWidth*1.1, 5);
-		}
+      translate([0,0,length1 - (wheelWidth*1.1) + buffer-(wheelWidth*1.1)/4]){
+        clip(wheelWidth*1.1, 5);
+      }
 	}
 
 }
@@ -492,8 +593,8 @@ module clip(clipLength,clipRadius){
 			cylinder(clipLength*2,clipRadius*0.7, clipRadius*0.7,$fn=1000);
 		}
 
-		translate([-(clipRadius + 1),-1/2,0.0*clipLength]){
-			cube([clipRadius*5,2,clipLength*5]);
+		translate([-(clipRadius ),-1/2,0.2*clipLength]){
+			cube([clipRadius*2,2,clipLength*2]);
 		}
 	}
 
