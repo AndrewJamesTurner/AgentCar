@@ -8,10 +8,11 @@ use <doubleClip.scad>
 use <frontWheelClip.scad>
 use <frontWheelConnections.scad>
 use <backWheelSupport.scad>
+use <rubberBandHolder.scad>
 
 $fn=50;
 
-carWidth = 130;
+carWidth = 150;
 carLength = 200;
 carThickness = 8;
 
@@ -21,16 +22,27 @@ wheelWidth = 5;
 wheelConnect = 20;
 wheelConnect2 = 20;
 
-buffer = 40;
-buffer2 = 15;
-buffer3 = 20;
-angle = 70; 
+frontToFrontWheels = 40;
+frontClipFromSide = 15;
+backToBackWheels = 40;
+angle = atan( (carLength-frontToFrontWheels-backToBackWheels) / ((carWidth/2)-frontClipFromSide)); 
 
 
 clipHole = 5;
 
 distanceDueToAngle = sin(angle)*wheelConnect2; 
-WidthOfSorterStrut = -buffer2+carWidth-(2*cos(angle)*wheelConnect2); 
+WidthOfSorterStrut = -frontClipFromSide+carWidth-(2*cos(angle)*wheelConnect2); 
+WidthOfLongerStrut = -frontClipFromSide+carWidth;
+
+echo("WidthOfSorterStrut");
+echo(WidthOfSorterStrut);
+
+echo("WidthOfLongerStrut");
+echo(WidthOfLongerStrut);
+
+echo("angle");
+echo(angle);
+
 
 // main baody of car
 translate([0,0,-carThickness/2]){
@@ -42,36 +54,36 @@ for (i = [0, 1]){
 	mirror([ i, 0, 0 ]){ 
 
 		// front wheels 
-		translate([(wheelConnect) + (carWidth/2), -buffer+(carLength/2), -carThickness-3]){
+		translate([(wheelConnect) + (carWidth/2), -frontToFrontWheels+(carLength/2), -carThickness-3]){
 			color("Green")  wheel(wheelHeight,wheelWidth,5); 
 		}	
 
 		// rear wheels
-		translate([(wheelConnect) + (carWidth/2) , buffer3-(carLength/2), -carThickness-3]){
+		translate([(wheelConnect) + (carWidth/2) , backToBackWheels-(carLength/2), -carThickness-3]){
 			color("Green") wheel(wheelHeight,wheelWidth,2);
 		}
 	
     // front wheel connection
-		translate([(carWidth/2)-buffer2, -buffer+(carLength/2), -carThickness-3]){
-			frontWheelConnections(wheelConnect+buffer2, wheelConnect2, wheelWidth, angle);
+		translate([(carWidth/2)-frontClipFromSide, -frontToFrontWheels+(carLength/2), -carThickness-3]){
+			frontWheelConnections(wheelConnect+frontClipFromSide, wheelConnect2, wheelWidth, angle);
 		}
 
 		// front wheel clips
     
-      translate([(carWidth/2)-buffer2, -buffer+(carLength/2),-carThickness/2]){
+      translate([(carWidth/2)-frontClipFromSide, -frontToFrontWheels+(carLength/2),-carThickness/2]){
         rotate([0,180,0]){
         frontWheelClip(7,4);
       }
 		}
 
-		translate([(carWidth/2)-buffer2,buffer3-carLength/2,-carThickness/2]){
+		translate([(carWidth/2)-frontClipFromSide,backToBackWheels-carLength/2,-carThickness/2]){
       rotate([0,180,0]){
         backWheelSupport();
       }
     }
 
     //
-		translate([(WidthOfSorterStrut/2)-buffer2/2, -buffer+(carLength/2)-distanceDueToAngle,-carThickness-4.5]){
+		translate([(WidthOfSorterStrut/2)-frontClipFromSide/2, -frontToFrontWheels+(carLength/2)-distanceDueToAngle,-carThickness-4.5]){
 			doubleClip(7,4);
 		}
 		
@@ -85,19 +97,19 @@ for (i = [0, 1]){
 	}	
 
 	// rear axel
-	translate([0,buffer3-carLength/2,-5.5-carThickness/2]){
+	translate([0,backToBackWheels-carLength/2,-5.5-carThickness/2]){
 		rearAxel(2, (carWidth) + (wheelConnect*2));
 	}
 
 
 	//
-	translate([0,-buffer+carLength/2,-carThickness-6]){
-		color("Blue") frontWheelStrut1(-buffer2+carWidth, buffer2, 4);
+	translate([0,-frontToFrontWheels+carLength/2,-carThickness-6]){
+		color("Blue") frontWheelStrut(WidthOfLongerStrut, frontClipFromSide, 4);
 	}
 
 
-	translate([0,-buffer+(carLength/2)-distanceDueToAngle,-carThickness-6])		{
-		color("Blue") frontWheelStrut1(WidthOfSorterStrut, buffer2, 4);
+	translate([0,-frontToFrontWheels+(carLength/2)-distanceDueToAngle,-carThickness-6])		{
+		color("Blue") frontWheelStrut(WidthOfSorterStrut, frontClipFromSide, 4);
 	}	
 
 
@@ -122,8 +134,21 @@ for (i = [0, 1]){
 				color("RED") dcMotorClip();
 			}
 	}
+  
+  translate([(carWidth/2) + 5, 0, -10-carThickness/2]){
+			rotate([0,90,0]){
+				rubberBandHolder(5,1);
+			}
+	}
+  
+  translate([(carWidth/2) + 5, -backToBackWheels-40, -6-carThickness/2]){
+			rotate([0,90,0]){
+				rubberBandHolder(30,2);
+			}
+	}
+  
 
-  translate([0,-buffer+(carLength/2)-distanceDueToAngle,-carThickness-8])		{
+  translate([0,-frontToFrontWheels+(carLength/2)-distanceDueToAngle,-carThickness-8])		{
     rotate([0,180,0]){
       stearingClip();
     }
@@ -154,7 +179,9 @@ module ultrasound(){
 }
 
 
-module frontWheelStrut2(widthFoo, buffer, radius){
+
+
+module frontWheelStrut(widthFoo, frontToFrontWheels, radius){
 		
 	thickness = 3;
 	width = 10;
@@ -163,34 +190,11 @@ module frontWheelStrut2(widthFoo, buffer, radius){
 
 		cube([widthFoo, width, thickness], center=true);
 
-		translate([-(buffer/2) + widthFoo/2,0,-thickness/2]){
+		translate([-(frontToFrontWheels/2) + widthFoo/2,0,-thickness/2]){
 			cylinder(h=thickness*1.1, r=radius, $fn=20, center=ture);
 		}
 
-		translate([(buffer/2) - widthFoo/2,0,-thickness/2]){
-			cylinder(h=thickness*1.1, r=radius, $fn=20, center=ture);
-		}
-
-	}
-
-}
-
-
-
-module frontWheelStrut1(widthFoo, buffer, radius){
-		
-	thickness = 3;
-	width = 10;
-	
-	difference(){
-
-		cube([widthFoo, width, thickness], center=true);
-
-		translate([-(buffer/2) + widthFoo/2,0,-thickness/2]){
-			cylinder(h=thickness*1.1, r=radius, $fn=20, center=ture);
-		}
-
-		translate([(buffer/2) - widthFoo/2,0,-thickness/2]){
+		translate([(frontToFrontWheels/2) - widthFoo/2,0,-thickness/2]){
 			cylinder(h=thickness*1.1, r=radius, $fn=20, center=ture);
 		}
 
