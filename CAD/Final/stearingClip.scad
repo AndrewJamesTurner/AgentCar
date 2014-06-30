@@ -1,4 +1,4 @@
-
+$fn=100;
 
 stearingClip();
 
@@ -26,7 +26,7 @@ module stearingClip(){
           translate([r,depth,height-r]){    
           
             rotate([90,0,00]){
-              cylinder(h=depth*1.1, r=r, $fn=1000);
+              cylinder(h=depth*1.1, r=r);
             }
           }
         }
@@ -41,11 +41,11 @@ module stearingClip(){
       cube([5,5,2]);
       
       translate([2.5,2.5,1]){
-          cylinder(h=1, r=1.5, $fn=1000);
+          cylinder(h=1, r=1.5);
         }
         
         translate([2.5,2.5,0]){
-           cylinder(h=2, r=1, $fn=1000);
+           cylinder(h=2, r=1);
         }
       }  
     }
@@ -57,11 +57,11 @@ module stearingClip(){
       cube([5,5,2]);
       
       translate([2.5,2.5,1]){
-          cylinder(h=1, r=1.5, $fn=1000);
+          cylinder(h=1, r=1.5);
         }
         
         translate([2.5,2.5,0]){
-           cylinder(h=2, r=1, $fn=1000);
+           cylinder(h=2, r=1);
         }
       }  
     }  

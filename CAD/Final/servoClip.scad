@@ -1,3 +1,4 @@
+$fn=100;
 
 servoClip();
 
@@ -39,11 +40,11 @@ module servoClip(){
         cube([9,9,3]);
         
         translate([4.5,4.5,1.5]){
-            cylinder(h=1.5, r=3, $fn=20);
+            cylinder(h=1.5, r=3);
           }
 
           translate([4.5,4.5,0]){
-             cylinder(h=3, r=1.5, $fn=20);
+             cylinder(h=3, r=1.5);
           }
         }
     }
@@ -55,11 +56,11 @@ module servoClip(){
         cube([9,9,3]);
         
         translate([4.5,4.5,1.5]){
-          cylinder(h=1.5, r=3, $fn=20);
+          cylinder(h=1.5, r=3);
         }
           
         translate([4.5,4.5,0]){
-          cylinder(h=3, r=1.5, $fn=20);
+          cylinder(h=3, r=1.5);
         }
       }  
     }

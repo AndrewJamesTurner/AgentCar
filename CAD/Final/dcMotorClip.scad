@@ -1,3 +1,4 @@
+$fn=100;
 
 dcMotorClip();
 
@@ -32,11 +33,11 @@ module dcMotorClip(){
             cube([10,10,3]);
    
             translate([5,5,1.5]){
-              cylinder(h=1.5, r=3, $fn=1000);
+              cylinder(h=1.5, r=3);
             }
 
             translate([5,5,0]){
-               cylinder(h=3, r=1, $fn=1000);
+               cylinder(h=3, r=1);
             }
           }
         }

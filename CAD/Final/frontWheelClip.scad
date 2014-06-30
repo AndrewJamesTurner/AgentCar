@@ -1,5 +1,6 @@
-
 use <clip.scad>
+
+$fn=100;
 
 frontWheelClip(7,4);
 
@@ -15,35 +16,35 @@ module frontWheelClip(clipLength,clipRadius){
 		}
 
     translate([-10,0,1.5]){
-      cylinder(h=1.5, r=3, $fn=20);
+      cylinder(h=1.5, r=3);
     }
 
     translate([10,0,1.5]){
-      cylinder(h=1.5, r=3, $fn=20);
+      cylinder(h=1.5, r=3);
     }
 
     translate([0,-10,1.5]){
-      cylinder(h=1.5, r=3, $fn=20);
+      cylinder(h=1.5, r=3);
     }
 
     translate([0,10,1.5]){
-      cylinder(h=1.5, r=3, $fn=20);
+      cylinder(h=1.5, r=3);
     }
 
     translate([-10,0,0]){
-      cylinder(h=1.5, r=1, $fn=20);
+      cylinder(h=1.5, r=1);
     }
 
     translate([10,0,0]){
-      cylinder(h=1.5, r=1, $fn=20);
+      cylinder(h=1.5, r=1);
     }
 
     translate([0,-10,0]){
-      cylinder(h=1.5, r=1, $fn=20);
+      cylinder(h=1.5, r=1);
     }
 
     translate([0,10,0]){
-      cylinder(h=1.5, r=1, $fn=20);
+      cylinder(h=1.5, r=1);
     }
 	}
 

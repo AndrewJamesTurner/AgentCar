@@ -9,18 +9,19 @@ use <frontWheelClip.scad>
 use <frontWheelConnections.scad>
 use <backWheelSupport.scad>
 use <rubberBandHolder.scad>
+use <frontWheelStrut.scad>
 
 $fn=50;
 
-carWidth = 150;
+carWidth = 130;
 carLength = 200;
 carThickness = 8;
 
 wheelHeight = 40;
-wheelWidth = 5;
+wheelWidth = 3;
 
 wheelConnect = 20;
-wheelConnect2 = 20;
+wheelConnect2 = 15;
 
 frontToFrontWheels = 40;
 frontClipFromSide = 15;
@@ -72,7 +73,7 @@ for (i = [0, 1]){
     
       translate([(carWidth/2)-frontClipFromSide, -frontToFrontWheels+(carLength/2),-carThickness/2]){
         rotate([0,180,0]){
-        frontWheelClip(7,4);
+          frontWheelClip(7,4);
       }
 		}
 
@@ -93,7 +94,6 @@ for (i = [0, 1]){
         ultrasound();
       }
     }
-
 	}	
 
 	// rear axel
@@ -181,26 +181,7 @@ module ultrasound(){
 
 
 
-module frontWheelStrut(widthFoo, frontToFrontWheels, radius){
-		
-	thickness = 3;
-	width = 10;
-	
-	difference(){
 
-		cube([widthFoo, width, thickness], center=true);
-
-		translate([-(frontToFrontWheels/2) + widthFoo/2,0,-thickness/2]){
-			cylinder(h=thickness*1.1, r=radius, $fn=20, center=ture);
-		}
-
-		translate([(frontToFrontWheels/2) - widthFoo/2,0,-thickness/2]){
-			cylinder(h=thickness*1.1, r=radius, $fn=20, center=ture);
-		}
-
-	}
-
-}
 
 module rearAxel(width, height){
 

@@ -1,6 +1,6 @@
 
 
-clip(10,5);
+clip(20,5);
 
 module clip(clipLength,clipRadius){
 	
@@ -9,8 +9,8 @@ module clip(clipLength,clipRadius){
 
 			cylinder(clipLength,clipRadius, clipRadius,$fn=1000);
 
-			translate([0,0,clipLength-clipLength*0.1]){
-				cylinder(1,clipRadius *1.1, clipRadius,$fn=1000);
+			translate([0,0,clipLength-1]){
+				cylinder(1,clipRadius +1, clipRadius,$fn=1000);
 			}
 		}
 

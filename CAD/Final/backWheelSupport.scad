@@ -1,4 +1,4 @@
-
+$fn = 100;
 backWheelSupport();
 
 
@@ -17,36 +17,36 @@ module backWheelSupport(){
 
       rotate([180,0,0]){
       
-        translate([-10,0,-1.5]){
-          cylinder(h=1.5, r=3, $fn=1000);
+        translate([-10,0,-2]){
+          cylinder(h=2, r=3);
         }
 
-        translate([10,0,-1.5]){
-          cylinder(h=1.5, r=3, $fn=1000);
+        translate([10,0,-2]){
+          cylinder(h=2, r=3);
         }
 
-        translate([0,-10,-1.5]){
-          cylinder(h=1.5, r=3, $fn=1000);
+        translate([0,-10,-2]){
+          cylinder(h=2, r=3);
         }
 
-        translate([0,10,-1.5]){
-          cylinder(h=1.5, r=3, $fn=1000);
+        translate([0,10,-2]){
+          cylinder(h=2, r=3);
         }
 
         translate([-10,0,0]){
-          cylinder(h=1.5, r=1, $fn=1000);
+          cylinder(h=2, r=1);
         }
 
         translate([10,0,0]){
-          cylinder(h=1.5, r=1, $fn=1000);
+          cylinder(h=2, r=1);
         }
 
         translate([0,-10,0]){
-          cylinder(h=1.5, r=1, $fn=1000);
+          cylinder(h=2, r=1);
         }
 
         translate([0,10,0]){
-          cylinder(h=1.5, r=1, $fn=1000);
+          cylinder(h=2, r=1);
         }
       }
     }
@@ -57,7 +57,7 @@ module backWheelSupport(){
       cube([5,5,5],center=true);
       
         rotate([0,90,0]){
-          cylinder(h=10, r=2.1, $fn=1000,center=true);
+          cylinder(h=10, r=2.1,center=true);
         }
       }
   }

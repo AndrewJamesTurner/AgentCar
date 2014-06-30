@@ -1,6 +1,7 @@
 use <clip.scad>
 
-doubleClip(20,5);
+$fn=100;
+doubleClip(7,4);
 
 module doubleClip(clipLength,clipRadius){
 
