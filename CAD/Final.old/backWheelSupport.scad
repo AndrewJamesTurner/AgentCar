@@ -52,9 +52,9 @@ module backWheelSupport(){
     }
   }
 
-  translate([0,0,3+5]){
+  translate([0,0,3+2.5]){
     difference(){
-      cube([10,10,10],center=true);
+      cube([5,5,5],center=true);
       
         rotate([0,90,0]){
           cylinder(h=10, r=2.1,center=true);

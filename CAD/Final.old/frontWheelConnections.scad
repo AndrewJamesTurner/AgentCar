@@ -22,7 +22,7 @@ frontWheelConnections(wheelConnect+frontClipFromSide, wheelConnect2, wheelWidth,
 module frontWheelConnections(length1, length2, wheelWidth, angle){
 	
 	thickness = 3;
-	width = 12;
+	width = 10;
 
   translate([0,0,0]){
 
@@ -68,8 +68,7 @@ module frontWheelConnections(length1, length2, wheelWidth, angle){
     
     translate([length1 -width/2,0,thickness/2]){
       rotate([0,90,0]){
-		cylinder(h=thickness+3, r=4.5, center=ture);
-       // clip(wheelWidth*1.1, 5);
+        clip(wheelWidth*1.1, 5);
       }
     
 	}

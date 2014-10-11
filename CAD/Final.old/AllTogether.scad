@@ -10,7 +10,6 @@ use <frontWheelConnections.scad>
 use <backWheelSupport.scad>
 use <rubberBandHolder.scad>
 use <frontWheelStrut.scad>
-use <frontWheelCap.scad>
 
 $fn=50;
 
@@ -56,15 +55,9 @@ for (i = [0, 1]){
 	mirror([ i, 0, 0 ]){ 
 
 		// front wheels 
-		translate([(wheelConnect) + (carWidth/2)-2.5, -frontToFrontWheels+(carLength/2), -carThickness-3]){
+		translate([(wheelConnect) + (carWidth/2), -frontToFrontWheels+(carLength/2), -carThickness-3]){
 			color("Green")  wheel(wheelHeight,wheelWidth,5); 
 		}	
-
-		// front wheel caps 
-		translate([(wheelConnect) + (carWidth/2)+2, -frontToFrontWheels+(carLength/2), -carThickness-2]){
-			Cap(5,4.5,7);
-		}
-
 
 		// rear wheels
 		translate([(wheelConnect) + (carWidth/2) , backToBackWheels-(carLength/2), -carThickness-3]){
@@ -78,21 +71,11 @@ for (i = [0, 1]){
 
 		// front wheel clips
     
-	translate([(carWidth/2)-frontClipFromSide, -frontToFrontWheels+(carLength/2),-carThickness/2]){
+      translate([(carWidth/2)-frontClipFromSide, -frontToFrontWheels+(carLength/2),-carThickness/2]){
         rotate([0,180,0]){
-          frontWheelClip(6,3.9);
-      	}
-	}
-
-	// front wheel clips
-    
-	translate([(carWidth/2)-frontClipFromSide, -frontToFrontWheels+(carLength/2),-(carThickness/2)-10]){
-        rotate([0,90,0]){
-          Cap(4,3.9,6);
-      	}
-	}
-
-		
+          frontWheelClip(7,4);
+      }
+		}
 
 		translate([(carWidth/2)-frontClipFromSide,backToBackWheels-carLength/2,-carThickness/2]){
       rotate([0,180,0]){
@@ -114,19 +97,19 @@ for (i = [0, 1]){
 	}	
 
 	// rear axel
-	translate([0,backToBackWheels-carLength/2,-8.5-carThickness/2]){
+	translate([0,backToBackWheels-carLength/2,-5.5-carThickness/2]){
 		rearAxel(2, (carWidth) + (wheelConnect*2));
 	}
 
 
 	//
 	translate([0,-frontToFrontWheels+carLength/2,-carThickness-6]){
-	//	color("Blue") frontWheelStrut(WidthOfLongerStrut, frontClipFromSide, 4);
+		color("Blue") frontWheelStrut(WidthOfLongerStrut, frontClipFromSide, 4);
 	}
 
 
 	translate([0,-frontToFrontWheels+(carLength/2)-distanceDueToAngle,-carThickness-6])		{
-	//	color("Blue") frontWheelStrut(WidthOfSorterStrut, frontClipFromSide, 4);
+		color("Blue") frontWheelStrut(WidthOfSorterStrut, frontClipFromSide, 4);
 	}	
 
 
@@ -158,7 +141,7 @@ for (i = [0, 1]){
 			}
 	}
   
-  translate([(carWidth/2) + 5, -backToBackWheels-20, -8-carThickness/2]){
+  translate([(carWidth/2) + 5, -backToBackWheels-40, -6-carThickness/2]){
 			rotate([0,90,0]){
 				rubberBandHolder(30,2);
 			}
