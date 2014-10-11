@@ -57,7 +57,7 @@ module backWheelSupport(){
       cube([10,10,10],center=true);
       
         rotate([0,90,0]){
-          cylinder(h=10, r=2.1,center=true);
+          cylinder(h=12, r=2.05,center=true);
         }
       }
   }

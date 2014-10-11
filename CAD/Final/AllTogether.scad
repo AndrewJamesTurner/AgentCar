@@ -10,7 +10,7 @@ use <frontWheelConnections.scad>
 use <backWheelSupport.scad>
 use <rubberBandHolder.scad>
 use <frontWheelStrut.scad>
-use <frontWheelCap.scad>
+use <Cap.scad>
 
 $fn=50;
 
@@ -65,7 +65,6 @@ for (i = [0, 1]){
 			Cap(5,4.5,7);
 		}
 
-
 		// rear wheels
 		translate([(wheelConnect) + (carWidth/2) , backToBackWheels-(carLength/2), -carThickness-3]){
 			color("Green") wheel(wheelHeight,wheelWidth,2);
@@ -84,7 +83,7 @@ for (i = [0, 1]){
       	}
 	}
 
-	// front wheel clips
+	// front wheel clips caps
     
 	translate([(carWidth/2)-frontClipFromSide, -frontToFrontWheels+(carLength/2),-(carThickness/2)-10]){
         rotate([0,90,0]){
@@ -100,9 +99,18 @@ for (i = [0, 1]){
       }
     }
 
-    //
-		translate([(WidthOfSorterStrut/2)-frontClipFromSide/2, -frontToFrontWheels+(carLength/2)-distanceDueToAngle,-carThickness-4.5]){
-			doubleClip(7,4);
+    // double clip (well it used to be...)
+		translate([(WidthOfSorterStrut/2)-frontClipFromSide/2, -frontToFrontWheels+(carLength/2)-distanceDueToAngle,-carThickness+4.5]){
+			rotate([0,180,0]){
+				doubleClip(13,3.9);
+			}
+		}
+
+	// double clip (well it used to be...)
+		translate([(WidthOfSorterStrut/2)-frontClipFromSide/2, -frontToFrontWheels+(carLength/2)-distanceDueToAngle,-carThickness-9]){
+			rotate([0,90,0]){
+				Cap(4,3.9,5);
+			}
 		}
 		
     
@@ -119,14 +127,14 @@ for (i = [0, 1]){
 	}
 
 
-	//
-	translate([0,-frontToFrontWheels+carLength/2,-carThickness-6]){
+	// don't use
+	//translate([0,-frontToFrontWheels+carLength/2,-carThickness-6]){
 	//	color("Blue") frontWheelStrut(WidthOfLongerStrut, frontClipFromSide, 4);
-	}
+	//}
 
 
 	translate([0,-frontToFrontWheels+(carLength/2)-distanceDueToAngle,-carThickness-6])		{
-	//	color("Blue") frontWheelStrut(WidthOfSorterStrut, frontClipFromSide, 4);
+		color("Blue") frontWheelStrut(WidthOfSorterStrut, frontClipFromSide, 4);
 	}	
 
 

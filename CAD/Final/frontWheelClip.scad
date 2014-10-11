@@ -2,7 +2,7 @@ use <clip.scad>
 
 $fn=100;
 
-frontWheelClip(6,3.9);
+frontWheelClip(5.5,3.9);
 
 module frontWheelClip(clipLength,clipRadius){
 
@@ -50,6 +50,5 @@ module frontWheelClip(clipLength,clipRadius){
 
 	translate([0,0,3]){
 		cylinder(h=clipLength, r=clipRadius);
-	    //clip(clipLength,clipRadius);
 	}
 }

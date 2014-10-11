@@ -66,11 +66,10 @@ module frontWheelConnections(length1, length2, wheelWidth, angle){
     }
     
     
-    translate([length1 -width/2,0,thickness/2]){
-      rotate([0,90,0]){
-		cylinder(h=thickness+3, r=4.5, center=ture);
-       // clip(wheelWidth*1.1, 5);
-      }
+	translate([length1 -width/2,0,thickness/2]){
+    	rotate([0,90,0]){
+			cylinder(h=thickness+2.5, r=4.95, center=ture);
+      	}
     
 	}
 }
